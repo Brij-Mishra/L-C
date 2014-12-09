@@ -1,0 +1,51 @@
+﻿@model string
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Open Orders</h2>
+<script src="~/Scripts/angular-min.js"></script>
+<script src="~/Scripts/Order/OrderModule.js"></script>
+<script src="~/Scripts/Order/OrderService.js"></script>
+<script src="~/Scripts/Order/OrderController.js"></script>
+<script type="text/javascript">
+
+    @*orderModule.factory("LoadOrders", function () {
+            return {
+                orders : @Html.Raw(Model)
+            };
+        });*@
+</script> 
+<div class="container" ng-app="orderModule">
+
+    <div class="row" ng-controller="orderController">
+        <table class="table table-condensed table-hover">
+            <tr>
+                <th>Order No</th>
+                <th>Order Details</th>
+                <th>Status</th>
+                <th>Packed</th>
+                <th>Out</th>
+                <th>Delivered</th>
+                <th>Print</th>
+            </tr>
+            <tr ng-repeat="order in orders">
+                <td> {{order.orderNo}}</td>
+                <td> {{order.orderDetails}}</td>
+                <td >
+                    <img src="~/Content/images/{{StatusColor($index)}}.png" /> </td>
+                <td style="cursor: pointer;" ng-click="updateOrder($event, $index)">
+                    <img id="{{order.orderNo}}packedImg" src="~/Content/images/{{IsPacked($index)}}.png" />
+                </td>
+                <td style="cursor: pointer;" ng-click="updateOrder($event, $index)">
+                    <img id="{{order.orderNo}}outImg" src="~/Content/images/{{IsOut($index)}}.png" />
+                </td>
+                <td style="cursor: pointer;" ng-click="updateOrder($event, $index)">
+                    <img id="{{order.orderNo}}deliveredImg" src="~/Content/images/{{IsDelivered($index)}}.png" />
+                </td>
+                <td> <input type="button" value="Print Invoice" class="btn btn-default" /></td>
+            </tr>
+        </table>
+
+    </div>
+</div>

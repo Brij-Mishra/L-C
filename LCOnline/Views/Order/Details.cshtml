@@ -1,0 +1,36 @@
+﻿@model IList<LCOnline.Models.CartVM>
+@{
+    ViewBag.Title = "Details";
+}
+
+<div>
+    <h4>Order details</h4>
+    <hr />
+    <div class="container">
+        <table class="table table-condensed table-hover">
+            <tr>
+                <th>Item </th>
+                <th>ItemName</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Sub Total</th>
+                <th></th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        
+                    </td>
+                    <td>@item.ItemName</td>
+                    <td>@item.Count</td>
+                    <td>@item.UnitPrice</td>
+                    <td style="font-weight: bold">@item.CartItemPrice</td>
+                    <td><input type="button" value="Update Item" class="btn btn-default" /></td>
+                </tr>
+            }
+      </table>
+</div>
+ 
+    @Html.ActionLink("Confirm Order", "Index", "OrderShipping", new object { }, new { @class = "btn btn-default" })
+</div>

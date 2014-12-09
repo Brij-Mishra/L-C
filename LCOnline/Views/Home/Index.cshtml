@@ -1,0 +1,379 @@
+﻿@{
+    ViewBag.Title = "Litti";
+}
+<div class="panelitem">
+
+   
+
+    @*<div id="slider1_container" style="position: relative; top: 20px; left: 100px; width: 800px; height: 300px;">
+
+        <div u="slides" style="cursor: move; position: absolute; overflow: hidden; left: 100px; top: 0px; width: 800px; height: 300px;">
+            <div><img u="image" src="~/Content/Images/Items/lmain.jpg" /></div>
+            <div><img u="image" src="~/Content/Images/Items/cmain.png" /></div>
+            <div><img u="image" src="~/Content/Images/Items/l2.jpg" /></div>
+
+        </div>
+    </div>*@
+    @*<h1><small>Selected Food</small></h1>*@
+    <div id="checkoutdiv">
+
+
+
+    </div>
+
+    <script type="text/x-kendo-template" id="cart-preview-template">
+        <div id="shop-info" data-bind="attr: { class: cartContentsClass }">
+            <ul data-role="listview" data-bind="source: cart.contents" data-template="cart-item" id="shop-list"></ul>
+        </div>
+        <br/>
+        <h1><small>Selected Food</small></h1>
+
+        <div id="shopping-cart">
+           
+
+            <p class="total-price" data-bind="html: totalPrice"></p>
+            <button type="button" class="btn btn-danger" data-bind="click: emptyCart">empty cart</button>
+            <button type="button" class="btn btn-success" data-bind="click: emptyCart">checkout</button>
+            @*<a id="empty-cart" href="#" data-bind="click: emptyCart">empty cart </a><a id="checkout" href="#/checkout"> checkout</a>*@
+        </div>
+
+    </script>
+
+    <script type="text/x-kendo-template" id="cart-item">
+        <li class="selected-products-list">
+            <a data-bind="click: removeFromCart" class="view-selected-items">
+                <img width="100" height="100"
+                     src="#= item.image #" />
+            </a>
+            <span class="selected-image-price"><span data-bind="text: quantity"></span>x<span data-bind="text: itemPrice"></span></span>
+        </li>
+    </script>
+
+    <h1><small>Choose your Litti</small></h1>
+    @*<span class="label label-success">Choose your Litti</span>*@
+    <div id="fooditems">
+
+        <ul data-role="listview"
+            data-template="fooditemstemplate"
+            data-bind="source:littidata"></ul>
+
+    </div>
+
+
+    <div class="page-header">
+        <h1><small>Choose your Chokha</small></h1>
+    </div>
+
+    @*<span class="label label-success">Choose your Chokha</span>*@
+    <div id="foodcitems">
+
+        <ul data-role="listview"
+            data-template="fooditemstemplate"
+            data-bind="source:chokhadata"></ul>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+    <script id="fooditemstemplate" type="text/x-kendo-template">
+        <div class="product">
+            @*<span class="loginclass" data-bind="text:name"></span>
+                <span class="idclass" data-bind="text:price" /><br />*@
+            <img class="imageclass" data-bind="attr: { src: image}" />
+            <button class="btn-link" data-bind="click: addToCart">Add to cart</button>
+        </div>
+        
+    </script>
+
+
+
+<script>
+    $(document).ready(function () {
+
+      //  alert("hello");
+        //var options = { $AutoPlay: true };
+        //var jssor_slider1 = new $JssorSlider$('slider1_container', options);
+
+
+
+        var fooditemsdatasource = kendo.observable({
+
+            littidata: new kendo.data.DataSource({
+                batch: true,
+                transport: {
+                    read: {
+                        url: "/JsonData/littidata.json",
+                        dataType: "json"
+                    }
+                }
+            }),
+
+            chokhadata: new kendo.data.DataSource({
+                batch: true,
+                transport: {
+                    read: {
+                        url: "/JsonData/chokhadata.json",
+                        dataType: "json"
+                    }
+                }
+            }),
+
+            addToCart: function (item) {
+                
+               
+                cart.add(item.data);
+            }
+        });
+
+
+        var cart = kendo.observable({
+            contents: [],
+            cleared: false,
+
+            contentsCount: function () {
+                return this.get("contents").length;
+            },
+
+            add: function (item) {
+                
+                var found = false;
+
+                this.set("cleared", false);
+
+                for (var i = 0; i < this.contents.length; i++) {
+                    var current = this.contents[i];
+                    if (current.item === item) {
+                        current.set("quantity", current.get("quantity") + 1);
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (!found) {
+                    this.contents.push({ item: item, quantity: 1 });
+                }
+           
+                
+            },
+
+            remove: function (item) {
+                for (var i = 0; i < this.contents.length; i++) {
+                    var current = this.contents[i];
+                    if (current === item) {
+                        this.contents.splice(i, 1);
+                        break;
+                    }
+                }
+            },
+
+            empty: function () {
+                var contents = this.get("contents");
+                contents.splice(0, contents.length);
+            },
+
+            clear: function () {
+                var contents = this.get("contents");
+                contents.splice(0, contents.length);
+                this.set("cleared", true);
+            },
+
+            total: function () {
+                var price = 0,
+                    contents = this.get("contents"),
+                    length = contents.length,
+                    i = 0;
+
+                for (; i < length; i++) {
+                    price += parseInt(contents[i].item.price) * contents[i].quantity;
+                }
+
+                return kendo.format("{0:c}", price);
+            }
+        });
+
+
+        var cartPreviewModel = kendo.observable({
+            cart: cart,
+
+            cartContentsClass: function () {
+                return this.cart.contentsCount() > 0 ? "active" : "empty";
+                alert("hi");
+            },
+
+            removeFromCart: function (e) {
+                this.get("cart").remove(e.data);
+            },
+
+            emptyCart: function () {
+                cart.empty();
+            },
+
+            itemPrice: function (cartItem) {
+                return kendo.format("{0:c}", cartItem.item.price);
+            },
+
+            totalPrice: function () {
+                return this.get("cart").total();
+            }
+            
+        });
+
+        var cartPreview = new kendo.View("cart-preview-template", { model: cartPreviewModel });
+        kendo.bind($("#cartPreview"), cartPreviewModel);
+
+        //kendo.bind($("#checkoutdiv"), cartPreview);
+
+      
+        kendo.bind($("#fooditems"), fooditemsdatasource);
+        kendo.bind($("#foodcitems"), fooditemsdatasource);
+        cartPreview.render("#checkoutdiv");
+       
+
+    });
+</script>
+<style scoped>
+ 
+    /*.fooditems {
+        width: 860px;
+        border: none;
+        background: none;
+    }
+
+    .foodcitems {
+        width: 860px;
+        border: none;
+        background: none;
+    }*/
+
+    #listView {
+        padding: 10px 5px;
+        margin-bottom: -1px;
+        min-height: 510px;
+    }
+
+    .product {
+        float: left;
+        position: relative;
+        width: 170px;
+        height: 200px;
+        margin: 0 2px;
+        padding: 0;
+    }
+
+        .product img {
+            width: 160px;
+            height: 180px;
+        }
+
+        .selected-products-list {
+    position: relative;
+    width: 100px;
+}
+
+        .view-selected-items, .view-selected-items:hover {
+    display: block;
+    position: relative;
+}
+
+.view-selected-items, .view-selected-items:hover {
+    display: block;
+    position: relative;
+     
+}
+
+.view-selected-items:after {
+    content: "";
+    display: block;
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    /*background-color: rgba(0,0,0,0);*/
+}
+
+.view-selected-items:hover:after {
+    background-color:  rgba(0,0,0,0.75);
+    background-image: url('remove-icon.png');
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+}
+
+#shop-list{
+    margin-top: 30px;
+    width: 1200px;
+    float: left;
+    text-align: right;
+    font-size: 20px;
+}
+
+#shop-list li{
+    float: left;
+    width: 100px;
+    margin-left: 10px;
+}
+
+/*#shopping-cart{
+    position: relative;
+    text-align: right;
+    float: right;
+    width: 200px;
+    background-color: #1f1f1f;
+    height: 100%;
+}
+
+#shopping-cart h3, #shopping-cart p{
+    text-align: left;
+}
+
+#shopping-cart h3{
+    padding-top: 20px;
+    padding-left: 14px;
+    margin-bottom: 7px;
+}
+
+
+#shopping-cart div{
+    display: inline-block;
+}
+
+#empty-cart{
+    display: inline-block;
+    width: 89px;
+    height: 28px;
+    line-height: 28px;
+    vertical-align: middle;
+    font-size: 10px;
+    text-transform: uppercase;
+    color: #ff3170;
+    background-color: #1f1f1f;
+    letter-spacing: 1px;
+}*/
+
+#empty-cart:hover{
+    text-decoration: underline;
+}
+
+        /*.add-to-cart {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 37px;
+    width: 200px;
+    padding-bottom: 3px;
+    color: #d60041;
+    font-size: 12px;
+    text-transform: uppercase;
+    background-color: transparent;
+    border-top: 1px dotted #a6a6a6;
+}*/
+</style>

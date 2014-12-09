@@ -1,0 +1,99 @@
+﻿[
+  {
+    "id": 1,
+    "name": "Litti  Chockha",
+    "price": 12.0,
+    "image": "../Content/Images/Items/c1.jpg",
+    "category": "Cold starters",
+    "description": "Organic greens topped with fresh sashimi, wasabi soy vinaigrette.",
+    "featured": true,
+    "stats": {
+      "protein": 2.9156,
+      "fat": 2.4396,
+      "carbohydrate": 3.8071,
+      "energy": 17.5775,
+      "sugar": 0.3738
+    }
+  },
+  {
+    "id": 2,
+    "name": "Litti Mutton",
+    "price": 21.0,
+    "image": "../Content/Images/Items/c2.jpg",
+    "category": "Cold starters",
+    "description": "Sushi bar variety with sushi rice.",
+    "featured": false,
+    "stats": {
+      "protein": 2.3138,
+      "fat": 0.6041,
+      "carbohydrate": 7.8006,
+      "energy": 7.5314,
+      "sugar": 0.3114
+    }
+  },
+  {
+    "id": 3,
+    "name": "Seaweed salad",
+    "price": 17.0,
+    "image": "../Content/Images/Items/c3.jpg",
+    "category": "Cold starters",
+    "description": "A nice seaweed salad.",
+    "featured": true,
+    "stats": {
+      "protein": 0.229,
+      "fat": 2.2852,
+      "carbohydrate": 4.8824,
+      "energy": 5.1003,
+      "sugar": 0.0037
+    }
+  },
+  {
+    "id": 4,
+    "name": "Edamame",
+    "price": 4.0,
+    "image": "../Content/Images/Items/c1.jpg",
+    "category": "Warm Starters",
+    "description": "Boiled soy beans with salt ",
+    "featured": true,
+    "stats": {
+      "protein": 0.7436,
+      "fat": 1.9771,
+      "carbohydrate": 0.674,
+      "energy": 17.294,
+      "sugar": 0.1028
+    }
+  },
+  {
+    "id": 5,
+    "name": "Miso soup",
+    "price": 4.0,
+    "image": "../Content/Images/Items/c2.jpg",
+    "category": "Warm Starters",
+    "description": "Soy bean soup with Wacame seaweed, tofu and spring onion.",
+    "featured": false,
+    "stats": {
+      "protein": 2.7642,
+      "fat": 2.1552,
+      "carbohydrate": 9.5294,
+      "energy": 9.393,
+      "sugar": 0.1399
+    }
+  },
+  {
+    "id": 6,
+    "name": "Maguro",
+    "price": 12.5,
+    "image": "../Content/Images/Items/c3.jpg",
+    "category": "Sashimi",
+    "description": "Tuna pieces.",
+    "featured": true,
+    "stats": {
+      "protein": 2.2293,
+      "fat": 0.7329,
+      "carbohydrate": 0.0618,
+      "energy": 28.2176,
+      "sugar": 0.4018
+    }
+  }
+ 
+]

@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Conform Your Address</h2>
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @*@Html.Display("Item 1")*@ Address Line 1
+        </dt>
+
+        <dd>
+            @ViewBag.AL1
+        </dd>
+
+        <dt>
+            @*@Html.Display("Item 1 Quantity")*@ Address Line 2
+        </dt>
+
+        <dd>
+            @ViewBag.AL2
+        </dd>
+
+        <dt>
+            @*@Html.Display("Item 1 Quantity")*@ Landmark
+        </dt>
+
+        <dd>
+            @ViewBag.NearBy
+        </dd>
+
+        <dt>
+            @*@Html.Display("Item 2")*@ City
+        </dt>
+
+        <dd>
+            @ViewBag.City
+        </dd>
+        <dt>
+            @*@Html.Display("Item 2 Quantity")*@ Pin
+        </dt>
+
+        <dd>
+            @ViewBag.Pin
+        </dd>
+        <dt>
+            @*@Html.Display("Total Price")*@ Contact Number
+        </dt>
+
+        <dd>
+            @ViewBag.ContactNo
+        </dd>
+
+    </dl>
+</div>
+
+@Html.ActionLink("Make Payment", "Create", "Order", new object { }, new { @class = "btn btn-default" })
+
+@Html.ActionLink("Change Address", "", "", new object { }, new { @class = "btn btn-default" })
